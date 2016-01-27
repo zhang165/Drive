@@ -21,16 +21,16 @@ public class CameraController : MonoBehaviour {
 			if (active) {
 				camera2.gameObject.SetActive (true);
 				camera1.gameObject.SetActive (false);
-				active = false;
+				active = !active;
 			} else {
 				camera1.gameObject.SetActive (true);
 				camera2.gameObject.SetActive (false);
-				active = true;
+				active = !active;
 			}	
 		}
 	}
 	// Update is called once per frame
 	void LateUpdate () {
-				transform.position = player.transform.position + offset;
+			transform.position = player.transform.position + offset;
 	}
 }
