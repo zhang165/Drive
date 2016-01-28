@@ -9,13 +9,19 @@ public class CameraController : MonoBehaviour {
     public GameObject player;
 
     private Vector3 offset;
-	// Use this for initialization
-	void Start () {
+
+    float cameraDistanceMax = 20f;
+    float cameraDistanceMin = 5f;
+    float cameraDistance = 10f;
+    float scrollSpeed = 0.5f;
+
+    void Start () {
 		offset = transform.position - player.transform.position;
 		camera1.gameObject.SetActive (true);
 		camera2.gameObject.SetActive (false);
 		active = true;
-	}
+
+    }
 	void Update(){
 		if (Input.GetKeyDown (KeyCode.C)) {
 			if (active) {
@@ -26,11 +32,14 @@ public class CameraController : MonoBehaviour {
 				camera1.gameObject.SetActive (true);
 				camera2.gameObject.SetActive (false);
 				active = !active;
-			}	
-		}
-	}
-	// Update is called once per frame
+			}
+        }
+        cameraDistance += Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
+        cameraDistance = Mathf.Clamp(cameraDistance, cameraDistanceMin, cameraDistanceMax);
+    }
+
 	void LateUpdate () {
 			transform.position = player.transform.position + offset;
+            
 	}
 }
