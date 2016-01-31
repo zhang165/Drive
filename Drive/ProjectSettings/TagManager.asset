@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - TopCamera
+  - Debug
   layers:
   - Default
   - TransparentFX
@@ -14,8 +14,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Unwalkable
+  - Debug
   - 
   - 
   - 

@@ -37,7 +37,7 @@ public class CarController : MonoBehaviour
 		bool isFar = (Vector3.Distance (transform.position, target.position) > collisionThreshold);
 		// always move towards our object in autopilot mode
 		if (autopilot && isFar) {
-			transform.position = Vector3.MoveTowards (transform.position, target.position, autopilotSpeed);
+			transform.position = Vector3.MoveTowards (transform.position, new Vector3(target.position.x, 0, target.position.z), autopilotSpeed);
 		}
 		// rotate towards our object in autopilot mode
 		if (autopilot && isFar) {
@@ -73,5 +73,10 @@ public class CarController : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         speed = 0;
+    }
+
+    public bool getAutopilot()
+    {
+        return autopilot;
     }
 }
