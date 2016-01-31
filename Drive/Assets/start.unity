@@ -3146,7 +3146,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: a8c1b1beecb22a142bad38f8b2e9ff5d, type: 2}
+  - {fileID: 2100000, guid: b0ea99a940c1f1c4392abdaf36e268c9, type: 2}
   - {fileID: 2100000, guid: 3ca82af770cdabf4b99935e3f4ac7f35, type: 2}
   - {fileID: 2100000, guid: 8d567eb044634a9409a6d27b1d2ba653, type: 2}
   - {fileID: 2100000, guid: ad1357982bf2f04448501dff23f1ac3c, type: 2}
@@ -4476,7 +4476,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1194012324}
   m_LocalRotation: {x: -0.24877442, y: 0, z: 0, w: 0.9685615}
-  m_LocalPosition: {x: -7.4, y: 1.19, z: -10.97}
+  m_LocalPosition: {x: -7.4, y: 1.19, z: -25.3}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1153011336}
@@ -4526,7 +4526,7 @@ BoxCollider:
   m_GameObject: {fileID: 1194012324}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
@@ -4819,7 +4819,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 7cd96f1100a8dcd448c26e63963bfaed, type: 2}
+  - {fileID: 2100000, guid: b0ea99a940c1f1c4392abdaf36e268c9, type: 2}
   - {fileID: 2100000, guid: ad1357982bf2f04448501dff23f1ac3c, type: 2}
   - {fileID: 2100000, guid: 656bc127c155cc04682fade69e344454, type: 2}
   - {fileID: 2100000, guid: a1ba4786d1c7aff46b3e01c0333ad6b2, type: 2}
@@ -5343,6 +5343,7 @@ GameObject:
   - 65: {fileID: 1367237622}
   - 114: {fileID: 1367237624}
   - 114: {fileID: 1367237627}
+  - 114: {fileID: 1367237621}
   m_Layer: 0
   m_Name: LANCEREVOX 2
   m_TagString: Player
@@ -5350,6 +5351,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1367237621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1367237620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52f9e526b6b8ebd448a810d36aec1e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seeker: {fileID: 1367237626}
+  target: {fileID: 1194012325}
 --- !u!65 &1367237622
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7122,7 +7136,7 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_Materials:
   - {fileID: 2100000, guid: 3ca82af770cdabf4b99935e3f4ac7f35, type: 2}
-  - {fileID: 2100000, guid: a8c1b1beecb22a142bad38f8b2e9ff5d, type: 2}
+  - {fileID: 2100000, guid: b0ea99a940c1f1c4392abdaf36e268c9, type: 2}
   - {fileID: 2100000, guid: 8d567eb044634a9409a6d27b1d2ba653, type: 2}
   - {fileID: 2100000, guid: 656bc127c155cc04682fade69e344454, type: 2}
   - {fileID: 2100000, guid: a1ba4786d1c7aff46b3e01c0333ad6b2, type: 2}

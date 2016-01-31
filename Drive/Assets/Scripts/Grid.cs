@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Grid : MonoBehaviour {
     public Transform player;
@@ -14,12 +15,32 @@ public class Grid : MonoBehaviour {
     private float nodeDiameter;
     int gridSizeX, gridSizeY;
 
+    public List<Node> path; // solution path
+    public List<Node> prevpath; // previousSolution path
+
     void Start(){ // initializes a 2d grid for A* search
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
         CreateGrid(); // creates the grid
         renderGrid(); // renders the grid
+    }
+
+    public List<Node> GetNeighbours(Node node) {
+        List<Node> neighbours = new List<Node>();
+        for (int i = -1; i <= 1; i++) {
+            for(int j=-1; j<=1; j++) {
+                if (i == 0 && j == 0) continue;
+
+                int checkX = node.gridX + i;
+                int checkY = node.gridY + j;
+                
+                if(checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY) {
+                    neighbours.Add(grid[checkX, checkY]);
+                }
+            }
+        }
+        return neighbours;
     }
 
     void CreateGrid(){
@@ -31,7 +52,7 @@ public class Grid : MonoBehaviour {
                 for(int j=0; j< gridSizeY; j++){
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (i * nodeDiameter + nodeRadius) + Vector3.forward * (j * nodeDiameter + nodeRadius);
                 bool walkable = !(Physics.CheckSphere(worldPoint,nodeRadius,unwalkableMask));
-                Node toAdd = new Node(walkable, worldPoint);
+                Node toAdd = new Node(walkable, worldPoint, i, j);
                 grid[i,j] = toAdd;
                 }
         } 
@@ -45,22 +66,18 @@ public class Grid : MonoBehaviour {
         return grid[x, y];
     }
 
-     void renderGrid() {
+     void renderGrid() { // renders the grid in real time
         if (grid != null) {
             Node playerNode = GetNodeFromWorldPoint(new Vector3(player.position.x + 8.0f, 0, player.position.z-2.0f));
             Node targetNode = GetNodeFromWorldPoint(new Vector3(target.position.x + 8.0f, 0, target.position.z-2.0f));
             for(int i=0; i<grid.GetLength(0); i++) {
                 for(int j=0; j<grid.GetLength(1); j++) {
                     Node n = grid[i, j];
-                    //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     GameObject cube = (GameObject)Instantiate(Resources.Load("GridCubes"), n.worldPosition, default(Quaternion));
                     cube.transform.localScale = Vector3.one * (nodeDiameter - .1f);
-                    //Destroy(cube.GetComponent<Collider>());
                     Renderer render = cube.GetComponent<Renderer>();
                     cubes[i, j] = render;
                     render.material.color = n.walkable ? Color.white : Color.red;
-                    //if (playerNode == n) render.material.color = Color.magenta;                // TODO: fix color generation
-                    //else if (targetNode == n) render.material.color = Color.green;
                     render.enabled = false; // all cubes turned off by default
                 }
             }
@@ -79,19 +96,29 @@ public class Grid : MonoBehaviour {
                 }
             }
         }
-    }
-
-    void OnDrawGizmos() { 
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-        if(grid != null){
-            Node playerNode = GetNodeFromWorldPoint(new Vector3(player.position.x+9.2f,0,player.position.z));
-            Node targetNode = GetNodeFromWorldPoint(new Vector3(target.position.x+9.2f,0,target.position.z));
-            foreach (Node n in grid){
-                Gizmos.color = n.walkable ? Color.white : Color.red;
-                if (playerNode == n) Gizmos.color = Color.magenta;
-                else if(targetNode == n) Gizmos.color = Color.green;
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
+        if(prevpath != null) {
+            foreach (Node n in prevpath) {
+                cubes[n.gridX, n.gridY].material.color = Color.white; // set colors of each previous path to white
             }
         }
+        foreach(Node n in path) {
+            cubes[n.gridX, n.gridY].material.color = Color.green; // set colors of each cube to green
+        }
+        prevpath = path;
     }
+
+    //void OnDrawGizmos() { 
+    //    Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+    //    if(grid != null){
+    //        Node playerNode = GetNodeFromWorldPoint(new Vector3(player.position.x+9.2f,0,player.position.z));
+    //        Node targetNode = GetNodeFromWorldPoint(new Vector3(target.position.x+9.2f,0,target.position.z));
+    //        foreach (Node n in grid){
+    //            Gizmos.color = n.walkable ? Color.white : Color.red;
+    //            if(path != null) if (path.Contains(n)) Gizmos.color = Color.green; // calculates the path
+    //            if (playerNode == n) Gizmos.color = Color.magenta;
+    //            else if(targetNode == n) Gizmos.color = Color.black;
+    //            Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
+    //        }
+    //    }
+    //}
 }
