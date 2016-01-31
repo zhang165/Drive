@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\PathController.cs" />
     <Compile Include="Assets\Scripts\Rotator.cs" />
     <Compile Include="Assets\Scripts\SlowSpin.cs" />
+    <Compile Include="Assets\Scripts\TargetController.cs" />
     <Compile Include="Assets\Scripts\WheelController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
