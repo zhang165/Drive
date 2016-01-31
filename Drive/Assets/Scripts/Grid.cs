@@ -66,6 +66,12 @@ public class Grid : MonoBehaviour {
         return grid[x, y];
     }
 
+	public int MaxSize{
+		get{
+			return gridSizeX * gridSizeY;
+		}
+	}
+
      void renderGrid() { // renders the grid in real time
         if (grid != null) {
             Node playerNode = GetNodeFromWorldPoint(new Vector3(player.position.x + 8.0f, 0, player.position.z-2.0f));
@@ -86,11 +92,11 @@ public class Grid : MonoBehaviour {
     }
 
     void Update() {
-        Node playerNode = GetNodeFromWorldPoint(new Vector3(player.position.x + 8.0f, 0, player.position.z - 2.0f));
-        Node targetNode = GetNodeFromWorldPoint(new Vector3(target.position.x + 8.0f, 0, target.position.z - 2.0f));
+        //Node playerNode = GetNodeFromWorldPoint(new Vector3(player.position.x + 8.0f, 0, player.position.z - 2.0f));
+        //Node targetNode = GetNodeFromWorldPoint(new Vector3(target.position.x + 8.0f, 0, target.position.z - 2.0f));
         if (Input.GetKeyDown(KeyCode.X)) { // toggle the colors
             for (int i = 0; i < grid.GetLength(0); i++) {
-                for (int j = 0; j < grid.GetLength(1); j++) { // TODO: update cube colors on move
+                for (int j = 0; j < grid.GetLength(1); j++) { 
                     Renderer r = cubes[i, j];
                     r.enabled = !r.enabled;
                 }
