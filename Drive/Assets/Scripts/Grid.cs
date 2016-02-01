@@ -18,6 +18,7 @@ public class Grid : MonoBehaviour {
     public List<Node> path; // solution path
     public List<Node> prevpath; // previousSolution path
 
+
     void Start(){ // initializes a 2d grid for A* search
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
@@ -46,7 +47,6 @@ public class Grid : MonoBehaviour {
     void CreateGrid(){
         grid = new Node[gridSizeX, gridSizeY]; // instantiate our 2d matrix
         cubes = new Renderer[gridSizeX, gridSizeY]; // instantiate our renderers
-
         Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.y / 2;
         for (int i=0; i< gridSizeX; i++){
                 for(int j=0; j< gridSizeY; j++){
@@ -83,7 +83,7 @@ public class Grid : MonoBehaviour {
                     cube.transform.localScale = Vector3.one * (nodeDiameter - .1f);
                     Renderer render = cube.GetComponent<Renderer>();
                     cubes[i, j] = render;
-                    render.material.color = n.walkable ? Color.white : Color.red;
+                    render.material.color = n.walkable ? new Color(0.2F, 0.3F, 0.4F, 0.2F) : Color.red;
                     render.enabled = false; // all cubes turned off by default
                 }
             }
@@ -104,7 +104,7 @@ public class Grid : MonoBehaviour {
         }
         if(prevpath != null) {
             foreach (Node n in prevpath) {
-                cubes[n.gridX, n.gridY].material.color = Color.white; // set colors of each previous path to white
+                cubes[n.gridX, n.gridY].material.color = new Color(0.2F, 0.3F, 0.4F, 0.2F); // set colors of each previous path to white
             }
         }
         foreach(Node n in path) {
