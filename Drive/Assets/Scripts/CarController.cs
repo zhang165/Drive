@@ -22,12 +22,17 @@ public class CarController : MonoBehaviour
 
 	private Quaternion lookRotation;
 	private Vector3 direction;
-    // Use this for initialization
+
+    PathController pathcontroller;
+    Vector3[] path; // path to follow in autopilot mode
+    int targetIndex = 0;
+        
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass += new Vector3(0, 0, 1);
 		autopilot = false;
+        pathcontroller = GetComponent<PathController>();
     }
 
 	void Update(){
@@ -35,19 +40,34 @@ public class CarController : MonoBehaviour
 			autopilot = !autopilot;
 		}
 		bool isFar = (Vector3.Distance (transform.position, target.position) > collisionThreshold);
-		// always move towards our object in autopilot mode
-		if (autopilot && isFar) {
-			transform.position = Vector3.MoveTowards (transform.position, new Vector3(target.position.x, 0, target.position.z), autopilotSpeed);
-		}
-		// rotate towards our object in autopilot mode
-		if (autopilot && isFar) {
-			direction = (target.position - transform.position).normalized;
-			lookRotation = Quaternion.LookRotation (direction);
-			transform.rotation = Quaternion.Slerp (transform.rotation, lookRotation, Time.deltaTime * turnSpeed);
-		}
+        // always move towards our object in autopilot mode
+        path = pathcontroller.getPath();
+        if (autopilot && isFar) {
+            path = pathcontroller.getPath();
+            StopCoroutine("FollowPath"); // stop previous enumeration
+            StartCoroutine("FollowPath"); // start new enumeration
+        }
 	}
 
-    // Update is called once per frame
+    IEnumerator FollowPath() { // use IEnumerator to move car towards path
+        Vector3 currentWaypoint = path[0];
+        while (true) {
+            if (transform.position == currentWaypoint) {
+                targetIndex++;
+                if (targetIndex >= path.Length) {
+                    yield break;
+                }
+                currentWaypoint = path[targetIndex];
+            }
+            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, autopilotSpeed * Time.deltaTime);
+            direction = (currentWaypoint - transform.position).normalized;
+            direction = new Vector3(direction.x, 0, direction.z);  // remove Y axis rotation
+            lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * turnSpeed);
+            yield return null;
+        }
+    }
+
     void FixedUpdate()
     {
         float x = Input.GetAxis("Horizontal");
@@ -57,11 +77,11 @@ public class CarController : MonoBehaviour
         if (speed > maxSpeed) speed = maxSpeed;
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(Vector3.forward * speed);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(-Vector3.forward * backSpeed);
+            transform.Translate(-Vector3.forward * backSpeed * Time.deltaTime);
             speed = 0;
         }
 

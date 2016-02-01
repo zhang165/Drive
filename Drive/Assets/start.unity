@@ -5402,10 +5402,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a0583c8f697d284fbec7930b43c7020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 1.8
-  backSpeed: 0.08
-  autopilotSpeed: 0.16
-  acceleration: 0.01
+  maxSpeed: 20
+  backSpeed: 5
+  autopilotSpeed: 5
+  acceleration: 1
   turnSpeed: 1.6
   collisionThreshold: 7
   target: {fileID: 1194012325}
