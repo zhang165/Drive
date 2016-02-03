@@ -11,7 +11,7 @@ GameObject:
   - 33: {fileID: 3300496}
   - 65: {fileID: 6542612}
   - 23: {fileID: 2308784}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GridCubes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Layer
-      value: 9
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled

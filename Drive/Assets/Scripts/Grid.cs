@@ -74,16 +74,17 @@ public class Grid : MonoBehaviour {
 
      void renderGrid() { // renders the grid in real time
         if (grid != null) {
-            Node playerNode = GetNodeFromWorldPoint(new Vector3(player.position.x + 8.0f, 0, player.position.z-2.0f));
-            Node targetNode = GetNodeFromWorldPoint(new Vector3(target.position.x + 8.0f, 0, target.position.z-2.0f));
+            //Node playerNode = GetNodeFromWorldPoint(new Vector3(player.position.x + 8.0f, 0, player.position.z-2.0f));
+            //Node targetNode = GetNodeFromWorldPoint(new Vector3(target.position.x + 8.0f, 0, target.position.z-2.0f));
             for(int i=0; i<grid.GetLength(0); i++) {
                 for(int j=0; j<grid.GetLength(1); j++) {
                     Node n = grid[i, j];
-                    GameObject cube = (GameObject)Instantiate(Resources.Load("GridCubes"), n.worldPosition, default(Quaternion));
+                    GameObject cube = (GameObject)Instantiate(Resources.Load("GridCubes"), new Vector3(n.worldPosition.x, n.worldPosition.y-0.93f, n.worldPosition.z), default(Quaternion));
+                    //GameObject cube = (GameObject)Instantiate(Resources.Load("Plane"), new Vector3(n.worldPosition.x, n.worldPosition.y+0.93f, n.worldPosition.z), default(Quaternion));
                     cube.transform.localScale = Vector3.one * (nodeDiameter - .1f);
                     Renderer render = cube.GetComponent<Renderer>();
                     cubes[i, j] = render;
-                    render.material.color = n.walkable ? new Color(0.2F, 0.3F, 0.4F, 0.2F) : Color.red;
+                    render.material.color = n.walkable ? new Color(0.5f,0.5f,0.5f,0.3f) : Color.red;
                     render.enabled = false; // all cubes turned off by default
                 }
             }
@@ -104,7 +105,7 @@ public class Grid : MonoBehaviour {
         }
         if(prevpath != null) {
             foreach (Node n in prevpath) {
-                cubes[n.gridX, n.gridY].material.color = new Color(0.2F, 0.3F, 0.4F, 0.2F); // set colors of each previous path to white
+                cubes[n.gridX, n.gridY].material.color = new Color(0.5f, 0.5f, 0.5f, 0.3f); // set colors of each previous path to white
             }
         }
         foreach(Node n in path) {
