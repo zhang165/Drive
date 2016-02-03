@@ -71,21 +71,19 @@ public class CarController : MonoBehaviour
     void FixedUpdate()
     {
         float x = Input.GetAxis("Horizontal");
-        
         if (rb.IsSleeping()) speed = 0; // set acceleration
         speed += acceleration;
         if (speed > maxSpeed) speed = maxSpeed;
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.UpArrow))
         {
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             transform.Translate(-Vector3.forward * backSpeed * Time.deltaTime);
             speed = 0;
         }
-
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
         {
             transform.Rotate(new Vector3(0, x, 0) * turnSpeed);
         }

@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Heap.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\PathController.cs" />
+    <Compile Include="Assets\Scripts\PathRequestManager.cs" />
     <Compile Include="Assets\Scripts\Rotator.cs" />
     <Compile Include="Assets\Scripts\SlowSpin.cs" />
     <Compile Include="Assets\Scripts\TargetController.cs" />
