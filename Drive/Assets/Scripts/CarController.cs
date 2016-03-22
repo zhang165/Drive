@@ -17,8 +17,9 @@ public class CarController : MonoBehaviour
     float moveSpeed;
 	public float collisionThreshold;
 	private bool autopilot;
+    private bool isFar;
 
-	public Transform target;
+    public Transform target;
 
 	private Quaternion lookRotation;
 	private Vector3 direction;
@@ -40,13 +41,16 @@ public class CarController : MonoBehaviour
 			autopilot = !autopilot;
 		}
         
-		bool isFar = (Vector3.Distance (transform.position, target.position) > collisionThreshold);
+		isFar = (Vector3.Distance (transform.position, target.position) > collisionThreshold);
         // always move towards our object in autopilot mode
         path = pathcontroller.getPath();
         if (autopilot && isFar) {
             path = pathcontroller.getPath();
             StopCoroutine("FollowPath"); // stop previous enumeration
             StartCoroutine("FollowPath"); // start new enumeration
+        }
+        else{
+            StopCoroutine("FollowPath");
         }
 	}
 
