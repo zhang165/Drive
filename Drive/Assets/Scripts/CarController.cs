@@ -39,6 +39,7 @@ public class CarController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.C)) {
 			autopilot = !autopilot;
 		}
+        
 		bool isFar = (Vector3.Distance (transform.position, target.position) > collisionThreshold);
         // always move towards our object in autopilot mode
         path = pathcontroller.getPath();
